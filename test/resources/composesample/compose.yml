@@ -1,0 +1,8 @@
+web:
+  image: busybox
+  links:
+   - db
+  ports:
+   - "8000:8000"
+db:
+  image: busybox
