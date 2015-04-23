@@ -9,13 +9,13 @@ function_exists() {
 function_exists "load_dockerinitd_includes" || {
     load_dockerinitd_includes(){
         . /lib/lsb/init-functions
-        docker_compose_libfile=${docker_compose_libfile-'/usr/local/src/docker-compose-initd.sh'}
+        DOCKERCOMPOSE_LIBFILE=${DOCKERCOMPOSE_LIBFILE-'/usr/local/src/docker-compose-initd/docker-compose-initd.sh'}
         # script start
-        [ -r $docker_compose_libfile ] || {
-            echo 'docker compose libfile not found: '$docker_compose_libfile
+        [ -r $DOCKERCOMPOSE_LIBFILE ] || {
+            echo 'docker compose libfile not found: '$DOCKERCOMPOSE_LIBFILE
             exit 1
         }
-        . $docker_compose_libfile
+        . $DOCKERCOMPOSE_LIBFILE
     }
 }
 
