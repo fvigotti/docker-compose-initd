@@ -49,9 +49,6 @@ do_validate_config() {
 
 }
 
-[ -z "$DISABLED_CONFIG_VALIDATION" ] && {
-do_validate_config
-}
 
 get_expected_containers_names(){
     cat "$YML_template_PATH/$YML_filename" | awk '$0 ~ "^([a-zA-Z0-9]+):.*$" {print $0}'| awk '$0 ~ "^([a-zA-Z0-9]+):.*$" {print $0}' | sed -e  's/^\([^:]*\)\(:\)/\1/g'
@@ -172,6 +169,10 @@ compose_app_restart(){
  compose_app_start
 }
 
+
+[ -z "$DISABLED_CONFIG_VALIDATION" ] && {
+do_validate_config
+}
 
 
 # docker-compose ps -q # show docker compose ids ( also of the stopped containers )
