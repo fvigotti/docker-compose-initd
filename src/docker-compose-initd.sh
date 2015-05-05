@@ -141,8 +141,8 @@ compose_app_reload(){
  compose_appTaks_rebuild
 
  app_rebuild_status=$?
- log_end_msg $app_stopping_status
- return $app_stopping_status
+ log_end_msg $app_rebuild_status
+ return $app_rebuild_status
 }
 
 
