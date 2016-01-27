@@ -1,0 +1,18 @@
+web:
+  image: busybox
+  links:
+   - db
+  entrypoint: "/bin/sleep"
+  command:
+    - "1000" # ensure container will remain open
+  ports:
+   - "8000"
+db:
+  image: busybox
+  entrypoint: "/bin/sleep"
+  command:
+    - "1000" # ensure container will remain open
+volumecontainertest:
+  image: busybox
+  environment:
+    - "MUST_ALWAYS_RUN=false"

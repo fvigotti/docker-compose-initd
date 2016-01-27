@@ -26,7 +26,7 @@ load_dockerinitd_includes
 #####  TEST CONFIGURATION
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 YML_template_PATH=$(echo $DIR'/../composesample')
-YML_filename="compose.yml"
+YML_filename="c.yml"
 # // config validation has been disabled and will be manually performed here in test
 do_validate_config
 ########

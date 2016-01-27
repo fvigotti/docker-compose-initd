@@ -65,6 +65,12 @@ getNonRunningAppContainersCount(){
     docker inspect -f {{.State.Running}} `get_actual_containers_ids` | grep -i "false" | wc -l
 }
 
+# return container that have MUST_ALWAYS_RUN=false variable exposed as env (the initial [ is here because first env variable start with an [ )
+getNonRequiredRunningAppContainersCount(){
+    docker inspect --format '{{ .Config.Env }}' `get_actual_containers_ids`  |  tr ' ' '\n'  | sed  's/^\[//; s/]$//;'  | egrep "^MUST_ALWAYS_RUN=" | sed 's/^.*=//' | grep 'false' |wc -l
+}
+
+
 compose_appTaks_rebuild(){
     log_progress_msg "rebuilding entire $YML_filename structure"
     cd "$YML_template_PATH"
@@ -82,9 +88,10 @@ compose_appTaks_softRebuild(){
     $DOCKER_COMPOSE_BIN_PATH -f $YML_filename  up -d --no-recreate
 }
 
+# NB this function will only check if numbes are correct, not if container names that should run match with running containers ( only works on counted values )
 # return 0 if app is running ok,
 # return 1 if expected container created count do not match
-# return 2 if containers are not all running
+# return 2 if containers count that are required to run are not all running
 is_entire_compose_app_running(){
     composeCreatedContainers=$(get_actual_containers_ids | wc -l)
     composeExpectedContainers=$(get_expected_containers_names | wc -l)
@@ -92,7 +99,17 @@ is_entire_compose_app_running(){
         return 1 # if expected container created count do not match
     }
 
-    [ "$(getNonRunningAppContainersCount)" -eq "0" ] || {
+    NON_REQUIRED_RUNNING="$(getNonRequiredRunningAppContainersCount)"
+    COUNT_NOT_RUNNING="$(getNonRunningAppContainersCount)"
+
+    log_progress_msg "containers count > NON_REQUIRED_RUNNING  =  $NON_REQUIRED_RUNNING"
+    log_progress_msg "containers count > COUNT_NOT_RUNNING  =  $COUNT_NOT_RUNNING"
+
+    let COUNT_INVALID_STATE="$COUNT_NOT_RUNNING - $NON_REQUIRED_RUNNING"
+    log_progress_msg "containers count > COUNT_INVALID_STATE  =  $COUNT_INVALID_STATE"
+
+    [ "$COUNT_INVALID_STATE" -gt "0" ] && {
+        log_progress_msg "docker containers in invalid state,  =  $COUNT_INVALID_STATE containers are required to run but are not"
         return 2 # if expected container created count do not match
     }
 

@@ -1,6 +1,8 @@
 #!/bin/bash
-
-set -xe
+# exit on error
+#set -e
+# output debug
+set -x
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 [ -z "${BASH}" ] && {
@@ -54,6 +56,12 @@ load_dockerinitd_includes(){
 export -f load_dockerinitd_includes
 
 #. $DIR/resources/initd/cs-sample.sh status
+echo "--------------- starting "
+bash $DIR/resources/initd/cs-sample.sh start
+app_status=$?
+echo "app_status = $app_status "
+
+echo "--------------- status "
 bash $DIR/resources/initd/cs-sample.sh start
 app_status=$?
 echo "app_status = $app_status "
