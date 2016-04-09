@@ -1,0 +1,186 @@
+[
+    {
+        "Id": "6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f",
+        "Created": "2016-04-09T10:29:45.301818375Z",
+        "Path": "/init.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 6149,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2016-04-09T10:29:45.635982643Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:df9553d663d62a310ea05ecaa2ae1ad0bfc26a4d91c48bb13236091629c048b2",
+        "ResolvConfPath": "/var/lib/docker/containers/6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f/hostname",
+        "HostsPath": "/var/lib/docker/containers/6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f/hosts",
+        "LogPath": "/var/lib/docker/containers/6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f/6b86642d4eb0e17ea60cdbcf8df8c32527ba9ad5276273658bfda13bcdeb581f-json.log",
+        "Name": "/composefiles_web_1",
+        "RestartCount": 0,
+        "Driver": "zfs",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "composefiles_default",
+            "PortBindings": {
+                "8000/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": ""
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "",
+                "MaximumRetryCount": 0
+            },
+            "VolumeDriver": "",
+            "VolumesFrom": [],
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "ShmSize": 67108864,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "KernelMemory": 0,
+            "Memory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": -1,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null
+        },
+        "GraphDriver": {
+            "Name": "zfs",
+            "Data": null
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "6b86642d4eb0",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "8000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": null,
+            "Image": "sleeper",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/init.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "c315d25d6c559ea893a16345153a643a5bc40607960f5c21766d0dc39cf56dc8",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "composefiles",
+                "com.docker.compose.service": "web",
+                "com.docker.compose.version": "1.6.2"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "70d527dcf6ccbbddf0a10312f488efc3c3b5627613dd74b99da9c5815cf1acf9",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "8000/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "2005"
+                    }
+                ]
+            },
+            "SandboxKey": "/var/run/docker/netns/70d527dcf6cc",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "composefiles_default": {
+                    "IPAMConfig": null,
+                    "Links": [
+                        "composefiles_db_1:composefiles_db_1",
+                        "composefiles_db_1:db",
+                        "composefiles_db_1:db_1"
+                    ],
+                    "Aliases": [
+                        "web",
+                        "6b86642d4eb0"
+                    ],
+                    "NetworkID": "76d19745db351dc19fbf73ab876533ea257f75aaf248ba02230e44ee6dc39326",
+                    "EndpointID": "9697b8a919e796d3cdb9a1427bce6f112f2eddfb064fb5cc19c31c2bf2f6e48e",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:12:00:03"
+                }
+            }
+        }
+    }
+]

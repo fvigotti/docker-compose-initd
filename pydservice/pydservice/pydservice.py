@@ -16,12 +16,50 @@ composeYmlFile = "../../test/resources/composesample/twoUpOneVolume.yml"
 dockerComposeCMD =  "/usr/local/bin/docker-compose"
 dockerCMD =  "/usr/bin/docker"
 
-def parseYml(composeYmlFile):
-    with open(composeYmlFile, 'r') as stream:
-        try:
-            return yaml.load(stream);
-        except yaml.YAMLError as exc:
-            print(exc)
+class DockerComposeYmlFile(object):
+
+    def __init__(self,composeYmlFile):
+        with open(composeYmlFile, 'r') as stream:
+            self.YMLContent  = yaml.load(stream)
+
+    def getContainerNames(self):
+        return self.YMLContent['services'].keys()
+
+class DockerCompose(object):
+    def __init__(self,composeYmlFile,externalCommandsExecutor):
+        self.externalCommandsExecutor = externalCommandsExecutor
+        self.composeYmlFile = composeYmlFile
+
+    def getContainersIds(self):
+        return filter( lambda x : x!= "", self.externalCommandsExecutor.run('docker-compose', "-f",self.composeYmlFile,"ps","-q").split("\n") )
+
+class ExternalCommandsExecutor(object):
+        def run(self,*args):
+            return subprocess.check_output(args)
+
+
+class ContainerInspection(object):
+
+    def __init__(self,inspectionObject):
+        self.inspectionObject = inspectionObject
+
+    def isRunning(self):
+        return self.inspectionObject['State']['Running']
+
+
+class DockerInspector(object):
+    def __init__(self,externalCommandsExecutor):
+        self.externalCommandsExecutor = externalCommandsExecutor
+
+    def inspect(self,containerId):
+        inspectionResults = self.externalCommandsExecutor.run("docker","inspect",containerId)
+        jsonResults = json.loads(inspectionResults)
+        if len(jsonResults) == 0:
+            return None
+
+        return ContainerInspection(jsonResults[0])
+
+
 
 
 def checkErrorInput(f):
