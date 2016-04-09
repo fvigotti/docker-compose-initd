@@ -1,0 +1,12 @@
+web:
+  image: busybox
+  links:
+   - db
+  ports:
+   - "8000"
+db:
+  image: busybox
+volumecontainertest:
+  image: busybox
+  environment:
+    - "MUST_ALWAYS_RUN=false"

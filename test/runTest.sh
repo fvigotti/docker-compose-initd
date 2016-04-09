@@ -62,7 +62,19 @@ app_status=$?
 echo "app_status = $app_status "
 
 echo "--------------- status "
-bash $DIR/resources/initd/cs-sample.sh start
+bash $DIR/resources/initd/cs-sample.sh status
+app_status=$?
+echo "app_status = $app_status "
+
+echo "--------------- stopping "
+bash $DIR/resources/initd/cs-sample.sh stop
+app_status=$?
+echo "app_status = $app_status "
+
+
+
+echo "--------------- status "
+bash $DIR/resources/initd/cs-sample.sh status
 app_status=$?
 echo "app_status = $app_status "
 

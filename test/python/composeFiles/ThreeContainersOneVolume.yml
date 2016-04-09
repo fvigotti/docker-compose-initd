@@ -1,0 +1,12 @@
+web:
+  image: sleeper
+  links:
+   - db
+  ports:
+   - "8000"
+db:
+  image: sleeper
+volumecontainertest:
+  image: busybox
+  environment:
+    - "MUST_ALWAYS_RUN=false"
