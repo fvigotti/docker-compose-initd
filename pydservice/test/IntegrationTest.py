@@ -21,8 +21,16 @@ class IntegrationTest(unittest.TestCase):
         self.assertEquals(2 , len(composeYmlFile.getContainerNames()))
 
     class ExternalCommandsExecutorStub():
-        def __init__(self,outputStubbed):
+        def __init__(self, outputStubbed):
             self.outputStubbed = outputStubbed
+
+        def run(self,*args):
+            return self.outputStubbed
+
+    class InputAwareExternalCommandsExecutorStub():
+        def __init__(self, expectedExecutionInput, fakeExecutionOutput):
+            self.expectedExecutionInput = expectedExecutionInput
+            self.fakeExecutionOutput = fakeExecutionOutput
 
         def run(self,*args):
             return self.outputStubbed
@@ -36,10 +44,7 @@ class IntegrationTest(unittest.TestCase):
 
         #test
         dockerCompose = pydservice.DockerCompose(ymlFile, stubcommandExecutor)
-
-        self.assertEquals(
-            len(dockerCompose.getContainersIds()), 0 )
-
+        self.assertEquals(len(dockerCompose.getContainersIds()), 0 )
 
 
     def testGetContainersIds(self):
@@ -51,9 +56,7 @@ class IntegrationTest(unittest.TestCase):
 
         #test
         dockerCompose = pydservice.DockerCompose(ymlFile, stubcommandExecutor)
-
-        self.assertEquals(
-            len(dockerCompose.getContainersIds()), 2 )
+        self.assertEquals(len(dockerCompose.getContainersIds()), 2 )
 
     def testInspectorReturnNoneWhenContainerIdIsNotFound(self):
         commandOutput = "[]\n"
@@ -62,7 +65,6 @@ class IntegrationTest(unittest.TestCase):
         inspector = pydservice.DockerInspector(stubcommandExecutor)
         inspection = inspector.inspect(containerId)
         self.assertIsNone(inspection)
-
 
     def testInspectorReturnContainerValidRunningInspectionObjectWhenIsfound(self):
 
@@ -89,15 +91,48 @@ class IntegrationTest(unittest.TestCase):
         inspection = inspector.inspect(containerId)
         self.assertFalse(inspection.isRunning())
 
+    
 
+    def testFoo(self):
+        ymlPath = self.getTestResourcePath("composeFiles/TwoContainers.yml")
 
+        expectedExecutionInput = [
+            ['docker-compose', '-f', ymlPath, 'ps', '-q'],
+            ['docker', 'inspect', 'id1'],
+            ['docker', 'inspect', 'id2'],
+        ]
+        fakeExecutionOutput = [
+            'id1\nid2\n',
+            '[{"State": {"Running": true}}]',
+            '[{"State": {"Running": true}}]',
+        ]
 
-    def test_TwoContainersOneVolume(self):
-        #print type(pydservice.startContainers)
+        stubcommandExecutor = IntegrationTest.InputAwareExternalCommandsExecutorStub(expectedExecutionInput, fakeExecutionOutput)
+        outputStream = IntegrationTest.StreamStub()
 
-        #pydservice.startContainers(self.getFullComposePath("composeFiles/ThreeContainersOneVolume.yml"))
-        #pydservice.stopContainers(self.getFullComposePath("composeFiles/ThreeContainersOneVolume.yml"))
-        self.assertEqual('foo'.upper(), 'FOO')
+        contextFactory = IntegrationTest.ContextFactoryStub(stubcommandExecutor, outputStream)
+
+        command = pydservice.StatusCommand(ymlPath, contextFactory)
+        exitCode = command.execute()
+
+        self.assertEquals(0, exitCode)
+        self.assertEquals('Running', outputStream.content)
+
+    
+    class StreamStub(object):
+        def __init__(self):
+            self.content = ""
+
+        def write(self, message):
+            self.content += message
+
+    class ContextFactoryStub(object):
+        def __init__(self, executor, output):
+            self.executor = executor
+            self.output = output
+
+        def buildOutputStream(self):
+            return self.output
 
 
 if __name__ == '__main__':

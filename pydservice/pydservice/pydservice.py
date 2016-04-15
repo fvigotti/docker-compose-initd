@@ -16,6 +16,23 @@ composeYmlFile = "../../test/resources/composesample/twoUpOneVolume.yml"
 dockerComposeCMD =  "/usr/local/bin/docker-compose"
 dockerCMD =  "/usr/bin/docker"
 
+class ContextFactory(object):
+    def setExternalCommandsExecutor(self, executor):
+        self.executor = executor
+    def setOutputStream(self, output):
+        self.output = output
+
+    def buildOutputStream(self):
+        return self.output
+
+class StatusCommand(object):
+    def __init__(self, ymlPath, contextFactory):
+        self.outputStream = contextFactory.buildOutputStream()
+
+    def execute(self):
+        self.outputStream.write('Running') 
+        return 0
+
 class DockerComposeYmlFile(object):
 
     def __init__(self,composeYmlFile):
