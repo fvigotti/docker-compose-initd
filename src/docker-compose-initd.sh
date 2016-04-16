@@ -44,7 +44,6 @@ do_validate_config() {
     EXPECTED_CONTAINERS_COUNT=$(get_expected_containers_names | wc -l )
     [ "$EXPECTED_CONTAINERS_COUNT" -lt "1" ] &&  {
         log_failure_msg "[ERROR]  cannot establish amount of expected containers"
-        return 1inspectContainers(getServicesId(composeYmlFile))
     }
 
 }
