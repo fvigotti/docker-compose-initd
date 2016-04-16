@@ -23,6 +23,8 @@
 
 EXPECTED_CONTAINERS_COUNT=0 # must be recalculated
 
+export COMPOSE_STOP_TIMEOUT=${COMPOSE_STOP_TIMEOUT-} #docker compose stop timeout
+
 
 
 do_validate_config() {
@@ -148,7 +150,7 @@ compose_app_reload(){
  log_daemon_msg "Reloading ( destroy and rebuild )  docker compose app" "compose"
  cd "$YML_template_PATH"
  log_progress_msg "Stopping containers"
- $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop
+ $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop $COMPOSE_STOP_TIMEOU
 
  log_progress_msg "Deleting cached containers containers"
  $DOCKER_COMPOSE_BIN_PATH -f $YML_filename rm --force
@@ -165,7 +167,7 @@ compose_app_reload(){
 compose_app_stop(){
  log_daemon_msg "Stopping docker compose app" "compose"
  cd "$YML_template_PATH"
- $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop
+ $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop $COMPOSE_STOP_TIMEOUT
  app_stopping_status=$?
  log_end_msg $app_stopping_status
  return $app_stopping_status
