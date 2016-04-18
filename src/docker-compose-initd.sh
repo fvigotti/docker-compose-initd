@@ -150,7 +150,7 @@ compose_app_reload(){
  log_daemon_msg "Reloading ( destroy and rebuild )  docker compose app" "compose"
  cd "$YML_template_PATH"
  log_progress_msg "Stopping containers"
- $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop $COMPOSE_STOP_TIMEOU
+ $DOCKER_COMPOSE_BIN_PATH -f $YML_filename stop $COMPOSE_STOP_TIMEOUT
 
  log_progress_msg "Deleting cached containers containers"
  $DOCKER_COMPOSE_BIN_PATH -f $YML_filename rm --force
